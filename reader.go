@@ -520,6 +520,9 @@ type ReaderConfig struct {
 	// This flag is being added to retain backwards-compatibility, so it will be
 	// removed in a future version of kafka-go.
 	OffsetOutOfRangeError bool
+
+	// Default: 5 sec
+	ConnectionTimeout time.Duration
 }
 
 // Validate method validates ReaderConfig properties.
@@ -735,6 +738,7 @@ func NewReader(config ReaderConfig) *Reader {
 			StartOffset:            r.config.StartOffset,
 			Logger:                 r.config.Logger,
 			ErrorLogger:            r.config.ErrorLogger,
+			Timeout:                r.config.ConnectionTimeout, // new changes
 		})
 		if err != nil {
 			panic(err)
